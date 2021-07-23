@@ -6,7 +6,7 @@ Just pick a directory, enter output directory or leave empty to save the output 
 
 Keep Going ;)
 
-<img src="docs/example1.png" alt="GUI look"/>
+<img src="docs/example.png" alt="GUI look"/>
 
 ## Installation
 
