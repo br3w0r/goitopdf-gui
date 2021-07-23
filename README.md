@@ -33,7 +33,7 @@ The easiest way is to install [TDM-GCC](https://jmeubank.github.io/tdm-gcc/downl
 
 ### On linux
 
-Set up a build environment as follows in linux section of [Fyne Getting Started guide](https://developer.fyne.io/started/) and then get and build from source (make shure you have git installed):
+Set up a build environment as follows in linux section of [Fyne Getting Started guide](https://developer.fyne.io/started/) and then get and build from source (make sure you have git installed):
 
 ```bash
 $ git clone https://github.com/br3w0r/goitopdf-gui.git
