@@ -22,7 +22,7 @@ Binaries for linux are coming soon.
 
 ### On windows
 
-The easiest way is to install [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) and then run the following commands (make shure that you have git installed):
+The easiest way is to install [TDM-GCC](https://jmeubank.github.io/tdm-gcc/download/) and then run the following commands (make sure that you have git installed):
 
 ```powershell
 > git clone https://github.com/br3w0r/goitopdf-gui.git
