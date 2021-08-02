@@ -10,7 +10,7 @@ func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("goitopdf-gui")
 
-	v := view.NewMainView(&myWindow)
+	v := view.NewMainView(myApp, myWindow)
 
 	myWindow.SetContent(v.Content())
 

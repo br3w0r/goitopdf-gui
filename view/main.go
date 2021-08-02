@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/br3w0r/goitopdf-gui/layouts"
 	"github.com/br3w0r/goitopdf/itopdf"
@@ -22,7 +23,9 @@ type data struct {
 
 type MainView struct {
 	data          *data
-	window        *fyne.Window
+	app           fyne.App
+	window        fyne.Window
+	toolbar       *widget.Toolbar
 	inDirLabel    *canvas.Text
 	inDirText     *widget.Entry
 	inDirBtn      *widget.Button
@@ -38,8 +41,12 @@ type MainView struct {
 	content       *fyne.Container
 }
 
-func NewMainView(window *fyne.Window) *MainView {
-	view := &MainView{window: window, data: &data{}}
+func NewMainView(app fyne.App, window fyne.Window) *MainView {
+	view := &MainView{app: app, window: window, data: &data{}}
+
+	view.toolbar = widget.NewToolbar(
+		widget.NewToolbarAction(theme.HelpIcon(), view.showHelp),
+	)
 
 	view.inDirLabel = canvas.NewText("Input folder:", color.White)
 	view.inDirText = widget.NewEntry()
@@ -63,15 +70,14 @@ func NewMainView(window *fyne.Window) *MainView {
 	view.saveFile = widget.NewLabel("")
 	view.saveFile.Wrapping = fyne.TextWrapBreak
 
-	view.openFileBtn = widget.NewButton("Open File", func() {
-		open.Start(view.data.saveFile)
-	})
+	view.openFileBtn = widget.NewButton("Open File", view.openFolder)
 	view.openFileBtn.Hide()
 
 	view.openFolderBtn = widget.NewButton("Open Folder", view.openFolder)
 	view.openFolderBtn.Hide()
 
 	view.content = container.NewVBox(
+		view.toolbar,
 		view.inDirLabel,
 		container.New(
 			&layouts.FileChoose{},
@@ -110,6 +116,15 @@ func (v *MainView) enableSaveBtn(s string) {
 	}
 }
 
+func (v *MainView) showHelp() {
+	helpView := NewHelp()
+	window := v.app.NewWindow("Help")
+
+	window.SetContent(helpView.Content())
+	window.Resize(fyne.NewSize(200, 0))
+	window.Show()
+}
+
 func (v *MainView) openFolder() {
 	if v.saveDirText.Text == "" {
 		open.Start(v.inDirText.Text)
@@ -120,7 +135,7 @@ func (v *MainView) openFolder() {
 
 func (v *MainView) chooseFolder(t int) func() {
 	return func() {
-		d := dialog.NewFolderOpen(v.chooseDir(t), *v.window)
+		d := dialog.NewFolderOpen(v.chooseDir(t), v.window)
 		d.Resize(v.content.Size())
 		if v.data.saveFileDirUri != nil {
 			d.SetLocation(v.data.saveFileDirUri)
