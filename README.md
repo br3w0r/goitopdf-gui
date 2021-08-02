@@ -42,6 +42,12 @@ $ go download
 $ go build -o ./goitopdf-gui.exe
 ```
 
+## TODO
+
+[ ] Add ability to choose multiple directories and files
+[ ] Add ability to set recursion mode (now images from all subdirectories are added by default)
+[ ] Cover code with unit tests
+
 ## License
 
 The software is released under GNU GPL-3.0
